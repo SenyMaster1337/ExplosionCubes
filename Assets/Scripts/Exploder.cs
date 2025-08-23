@@ -3,18 +3,28 @@ using UnityEngine;
 
 public class Exploder : MonoBehaviour
 {
-    [SerializeField] private RayReader _test;
+    [SerializeField] private RayReader _rayReader;
     [SerializeField] private float _explosionRadius;
     [SerializeField] private float _explosionForce;
 
     private void OnEnable()
     {
-        _test.ExplosionCubes += Explode;
+        if (_rayReader == null)
+        {
+            _rayReader = FindObjectOfType<RayReader>();
+            _explosionRadius = 5;
+            _explosionForce = 100;
+        }
+
+        if (_rayReader != null)
+        {
+            _rayReader.ExplosionCubes += Explode;
+        }
     }
 
     private void OnDisable()
     {
-        _test.ExplosionCubes -= Explode;
+        _rayReader.ExplosionCubes -= Explode;
     }
 
     private void Explode()

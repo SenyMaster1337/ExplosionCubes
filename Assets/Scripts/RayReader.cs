@@ -8,7 +8,7 @@ public class RayReader : MonoBehaviour
     private RaycastHit _hit;
     private Ray _ray;
 
-    public event Action<GameObject> CreateCubes;
+    public event Action<Vector3, Vector3> CreateCubes;
     public event Action ExplosionCubes;
 
     private void OnEnable()
@@ -29,7 +29,7 @@ public class RayReader : MonoBehaviour
         {
             if (_hit.collider.tag == "Object")
             {
-                CreateCubes?.Invoke(_hit.collider.gameObject);
+                CreateCubes?.Invoke(_hit.point ,_hit.collider.bounds.size);
                 ExplosionCubes?.Invoke();
                 Destroy(_hit.collider.gameObject);
             }
